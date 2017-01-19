@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+ mongodb:
+   image: mongo
+   container_name: bpm-mongo
+   ports:
+   - "27017:27017"
+   expose:
+   - "27017"
+ 
+ rest:
+   build: hr-rest/ 
+   container_name: bpm-rest
+   ports:
+   - "8181:8080"
+   expose:
+   - "8181"
+   depends_on:
+   - mongodb
+   links:
+   - mongodb
+ 
+ web:
+   build: hr-web/
+   container_name: bpm-web
+   ports:
+   - "8989:8080"  
+   expose:
+   - "8989"
+   depends_on:
+   - rest
+  
